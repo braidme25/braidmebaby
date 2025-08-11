@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Braid Me Baby</title>
+<style>
+body {margin:0;font-family:'Helvetica Neue',sans-serif;background:#fdfaf6;color:#4a3f35;line-height:1.6;}
+header {background:linear-gradient(to right,#e6d5c3,#f5e6d3);padding:40px 20px;text-align:center;}
+header h1 {font-size:2.5rem;margin:0;font-family:'Georgia',serif;letter-spacing:2px;}
+header p {max-width:600px;margin:10px auto 0;}
+nav {display:flex;justify-content:center;background:#f5e6d3;padding:10px 0;}
+nav a {margin:0 15px;text-decoration:none;color:#4a3f35;font-weight:bold;}
+nav a:hover {color:#b89b72;}
+section {padding:40px 20px;max-width:900px;margin:auto;}
+h2 {font-family:'Georgia',serif;color:#b89b72;border-bottom:2px solid #e6d5c3;padding-bottom:5px;margin-bottom:20px;}
+.gallery {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;}
+.gallery img {width:100%;border-radius:8px;object-fit:cover;}
+.services table {width:100%;border-collapse:collapse;margin-top:20px;}
+.services th,.services td {border:1px solid #e6d5c3;padding:10px;}
+.services th {background:#f5e6d3;}
+form {background:#fff;padding:20px;border-radius:8px;border:1px solid #e6d5c3;}
+form label {display:block;margin-top:10px;font-weight:bold;}
+form input,form textarea,form select {width:100%;padding:8px;margin-top:5px;border:1px solid #e6d5c3;border-radius:5px;}
+form button {margin-top:15px;padding:10px 20px;background:#b89b72;color:white;border:none;border-radius:5px;cursor:pointer;}
+form button:hover {background:#a7855c;}
+footer {background:#f5e6d3;text-align:center;padding:20px;font-size:0.9rem;}
+</style>
+</head>
+<body>
+
+<script id="siteContent" type="application/json">
+{
+    "siteTitle": "Braid Me Baby",
+    "siteIntro": "Hey! I’m Sasha and welcome to Braid Me Baby! I started braiding when I had my daughter and fell in love with it! I’m self taught and have been braiding for about 6 years now. I specialize in knotless and feed in braid hairstyles. It’s a pleasure to have you! Welcome baby!",
+    "about": "At Braid Me Baby, every braid is crafted with care, precision, and love. I’m passionate about making you feel beautiful and confident. Whether you want knotless braids for a natural look or feed-in braids for added length and style, you’re in the right place.",
+    "policies": [
+        "A non-refundable deposit is required to secure your appointment.",
+        "Please arrive on time with clean, detangled hair.",
+        "Rescheduling must be done at least 48 hours in advance.",
+        "No extra guests unless being serviced."
+    ],
+    "gallery": [
+        "https://via.placeholder.com/400x400?text=Style+1",
+        "https://via.placeholder.com/400x400?text=Style+2",
+        "https://via.placeholder.com/400x400?text=Style+3",
+        "https://via.placeholder.com/400x400?text=Style+4"
+    ],
+    "services": [
+        {"name": "Small Knotless Braids", "price": "$220+"},
+        {"name": "Medium Knotless Braids", "price": "$180+"},
+        {"name": "Feed-in Braids", "price": "$80+"},
+        {"name": "Boho Knotless Braids", "price": "$250+"}
+    ],
+    "bookingIntro": "All bookings require a deposit. Fill out the form below and you will be contacted for confirmation.",
+    "footer": "© 2025 Braid Me Baby | Follow on Instagram: <a href='https://instagram.com/' target='_blank'>@BraidMeBaby</a>"
+}
+</script>
+
+<header>
+    <h1 id="siteTitle"></h1>
+    <p id="siteIntro"></p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#policies">Policies</a>
+    <a href="#gallery">Photo Gallery</a>
+    <a href="#services">Services & Pricing</a>
+    <a href="#booking">Booking</a>
+</nav>
+
+<section id="about">
+    <h2>About</h2>
+    <p id="aboutText"></p>
+</section>
+
+<section id="policies">
+    <h2>Policies</h2>
+    <ul id="policiesList"></ul>
+</section>
+
+<section id="gallery">
+    <h2>Photo Gallery</h2>
+    <div class="gallery" id="galleryImages"></div>
+</section>
+
+<section id="services" class="services">
+    <h2>Services & Pricing</h2>
+    <table id="servicesTable"></table>
+</section>
+
+<section id="booking">
+    <h2>Book Your Appointment</h2>
+    <p id="bookingIntro"></p>
+    <form action="https://formspree.io/f/mblkqboa" method="POST">
+        <label>Full Name</label>
+        <input type="text" name="name" required>
+
+        <label>Service</label>
+        <select name="service" id="serviceOptions" required></select>
+
+        <label>Preferred Date</label>
+        <input type="date" name="date" required>
+
+        <label>Instagram Handle</label>
+        <input type="text" name="instagram">
+
+        <label>Additional Notes</label>
+        <textarea name="notes" rows="4"></textarea>
+
+        <button type="submit">Submit Booking</button>
+    </form>
+</section>
+
+<footer>
+    <p id="footerText"></p>
+</footer>
+
+<script>
+// Load JSON from script tag
+const data = JSON.parse(document.getElementById('siteContent').textContent);
+
+// Fill in page
+document.getElementById('siteTitle').textContent = data.siteTitle;
+document.getElementById('siteIntro').textContent = data.siteIntro;
+document.getElementById('aboutText').textContent = data.about;
+
+// Policies
+document.getElementById('policiesList').innerHTML = data.policies.map(p => `<li>${p}</li>`).join('');
+
+// Gallery
+document.getElementById('galleryImages').innerHTML = data.gallery.map(img => `<img src="${img}" alt="braid style">`).join('');
+
+// Services
+document.getElementById('servicesTable').innerHTML = '<tr><th>Service</th><th>Price</th></tr>' + data.services.map(s => `<tr><td>${s.name}</td><td>${s.price}</td></tr>`).join('');
+
+// Booking intro
+document.getElementById('bookingIntro').textContent = data.bookingIntro;
+
+// Booking dropdown
+document.getElementById('serviceOptions').innerHTML = '<option value="">--Select--</option>' + data.services.map(s => `<option>${s.name}</option>`).join('');
+
+// Footer
+document.getElementById('footerText').innerHTML = data.footer;
+</script>
+
+</body>
+</html>
